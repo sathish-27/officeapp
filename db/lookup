@@ -1,0 +1,108 @@
+#user groups
+insert into `groups`(`group_name`,`created_by`,`updated_by`,`effective_date`,`expiry_date`,`created_date`,`updated_date`,`group_code`) values ('user',null,null,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,'USER');
+insert into `groups`(`group_name`,`created_by`,`updated_by`,`effective_date`,`expiry_date`,`created_date`,`updated_date`,`group_code`) values ('admin',null,null,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,'ADMIN');
+
+
+
+#lookup group
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('ROLES','Roles',null,null,CURDATE(),null);
+
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('COUNTRY','Country',null,null,CURDATE(),null);
+
+
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('INSTATE','IND states',null,null,CURDATE(),null);
+
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('GENDER','gender',null,null,CURDATE(),null);
+
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('MARITAL_STATUS','marital status',null,null,CURDATE(),null);
+
+insert into `lookup_group`(`lookup_group_cd`,`lookup_group_desc`,`created_by`,`updated_by`,`created_date`,`updated_date`) 
+values ('USERSTATUS','user status',null,null,CURDATE(),null);
+
+#lookupdtl
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values
+ ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='ROLES'),'user',
+ 'iRide Passenger','1','1',0,1,2,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='ROLES'),'ADMIN','iRide Admin','1','1',0,1,3,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values
+ ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='COUNTRY'),'IN','India','KM','Rs',
+ 0,1,1,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),91,'INR',null);
+
+
+
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'TN','Tamil Nadu','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,1,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'AP','Andhra pradesh','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,2,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'KY','kerala','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,3,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'MP','madhya pradesh','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,4,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'GA','GOA','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,5,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='INSTATE'),'PONDY','Pondicherry','1','1',(select IFNULL ((select  dtl2.lookup_dtl_id FROM lookup_dtl dtl2, lookup_group lg where 
+dtl2.lookup_group_id = lg.lookup_group_id and lg.lookup_group_cd='COUNTRY' 
+and dtl2.dtl_cd = 'IN'),0) As parent),2,5,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='GENDER'),'MALE','male','1','1',
+0,1,1,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='GENDER'),'FEMALE','female','1','1',
+0,1,2,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values
+ ((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='GENDER'),'OTHERS','others','3','3',
+ 0,1,3,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='MARITAL_STATUS'),'SINGLE','single','1','1',
+0,1,1,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='MARITAL_STATUS'),'MARRIED','married','1','1',
+0,1,2,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='USERSTATUS'),'active','active','1','1',
+0,1,1,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='USERSTATUS'),'INACTIVE','inactive','1','1',
+0,1,2,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
+
+insert into `lookup_dtl`(`lookup_group_id`,`dtl_cd`,`dtl_desc`,`dtl_cd1`,`dtl_cd2`,`parent_id`,`hierarchy_level`,
+`sequence_no`,`effective_date`,`expiry_date`,`dtl_cd3`,`dtl_cd4`,`dtl_cd5`) values 
+((select lg1.lookup_group_id from lookup_group lg1 where lg1.lookup_group_cd ='USERSTATUS'),'SUSPENDED','suspende','1','1',
+0,1,3,CURDATE(),DATE_ADD(CURDATE(), INTERVAL 2 YEAR),null,null,null);
