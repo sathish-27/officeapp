@@ -1,7 +1,6 @@
 package com.icore.office.domin;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,8 +51,7 @@ public class Group {
 	private Date createdDate;
 
 	
-
-
+	
 	public Group(Integer groupId, String groupName, String groupCode, Integer createdBy, Integer updatedBy,
 			Date effectiveDate, Date expiryDate, Date updatedDate, Date createdDate) {
 		super();
@@ -88,6 +86,7 @@ public class Group {
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 
 
 	public Integer getGroupId() {
@@ -161,9 +160,6 @@ public class Group {
 				+ expiryDate + ", updatedDate=" + updatedDate + ", createdDate=" + createdDate + "]";
 	}
 
-
-
-	
 
 
 }

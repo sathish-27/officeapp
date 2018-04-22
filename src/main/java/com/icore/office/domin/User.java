@@ -2,6 +2,7 @@ package com.icore.office.domin;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,11 +31,14 @@ public class User {
 	@Column(name = "last_name", length = 50, nullable = false)
 	private String lastName;
 
+
 	@Column(name = "email", length = 255, nullable = false)
 	private String email;
 
 	@Column(name = "password", length = 75, nullable = true)
 	private String password;
+
+
 
 	@ManyToOne
 	@JoinColumn(name = "activation", nullable = true)
@@ -73,30 +78,17 @@ public class User {
 	@Column(name = "mobile_number", length = 25)
 	private String mobileNumber;
 
-	@Column(name = "social_provider", nullable = true)
-	private String socialProvider;
-
-	@Column(name = "provider_uid", nullable = true)
-	private String providerId;
-
-	@ManyToOne
-	@JoinColumn(name = "gender_id")
-	private LookupDtl gender;
-
-	@ManyToOne
-	@JoinColumn(name = "marital_status_id")
-	private LookupDtl maritalStatus;
-
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	private UserAdditionalInfo userAdditionalInfo;
 
 	public User() {
 		super();
 	}
 
-
 	public User(Integer userId, String userName, String firstName, String lastName, String email, String password,
 			LookupDtl activation, Date dateOfBirth, Integer createdBy, Integer updatedBy, Date effectiveDate,
 			Date expiryDate, LookupDtl status, Date updatedDate, Date createdDate, String phoneNumber, String workPhone,
-			String mobileNumber, String socialProvider, String providerId, LookupDtl gender, LookupDtl maritalStatus) {
+			String mobileNumber, UserAdditionalInfo userAdditionalInfo) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -116,232 +108,160 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.workPhone = workPhone;
 		this.mobileNumber = mobileNumber;
-		this.socialProvider = socialProvider;
-		this.providerId = providerId;
-		this.gender = gender;
-		this.maritalStatus = maritalStatus;
+		this.userAdditionalInfo = userAdditionalInfo;
 	}
-
 
 	public Integer getUserId() {
 		return userId;
 	}
 
-
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
 
 	public String getUserName() {
 		return userName;
 	}
 
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 
 	public String getLastName() {
 		return lastName;
 	}
 
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public LookupDtl getActivation() {
 		return activation;
 	}
 
-
 	public void setActivation(LookupDtl activation) {
 		this.activation = activation;
 	}
-
 
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
 
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
-
 
 	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
 
 	public Date getEffectiveDate() {
 		return effectiveDate;
 	}
 
-
 	public void setEffectiveDate(Date effectiveDate) {
 		this.effectiveDate = effectiveDate;
 	}
-
 
 	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-
 
 	public LookupDtl getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(LookupDtl status) {
 		this.status = status;
 	}
-
 
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
 
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
 
 	public String getWorkPhone() {
 		return workPhone;
 	}
 
-
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
 	}
-
 
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
-
-	public String getSocialProvider() {
-		return socialProvider;
+	public UserAdditionalInfo getUserAdditionalInfo() {
+		return userAdditionalInfo;
 	}
 
-
-	public void setSocialProvider(String socialProvider) {
-		this.socialProvider = socialProvider;
+	public void setUserAdditionalInfo(UserAdditionalInfo userAdditionalInfo) {
+		this.userAdditionalInfo = userAdditionalInfo;
 	}
-
-
-	public String getProviderId() {
-		return providerId;
-	}
-
-
-	public void setProviderId(String providerId) {
-		this.providerId = providerId;
-	}
-
-
-	public LookupDtl getGender() {
-		return gender;
-	}
-
-
-	public void setGender(LookupDtl gender) {
-		this.gender = gender;
-	}
-
-
-	public LookupDtl getMaritalStatus() {
-		return maritalStatus;
-	}
-
-
-	public void setMaritalStatus(LookupDtl maritalStatus) {
-		this.maritalStatus = maritalStatus;
-	}
-
 
 	@Override
 	public String toString() {
@@ -350,8 +270,8 @@ public class User {
 				+ ", dateOfBirth=" + dateOfBirth + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy
 				+ ", effectiveDate=" + effectiveDate + ", expiryDate=" + expiryDate + ", status=" + status
 				+ ", updatedDate=" + updatedDate + ", createdDate=" + createdDate + ", phoneNumber=" + phoneNumber
-				+ ", workPhone=" + workPhone + ", mobileNumber=" + mobileNumber + ", socialProvider=" + socialProvider
-				+ ", providerId=" + providerId + ", gender=" + gender + ", maritalStatus=" + maritalStatus + "]";
+				+ ", workPhone=" + workPhone + ", mobileNumber=" + mobileNumber + ", userAdditionalInfo="
+				+ userAdditionalInfo + "]";
 	}
 
 	
