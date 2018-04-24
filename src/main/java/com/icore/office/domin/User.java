@@ -1,17 +1,22 @@
 package com.icore.office.domin;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "users")
@@ -40,18 +45,10 @@ public class User {
 
 
 
-	@ManyToOne
-	@JoinColumn(name = "activation", nullable = true)
-	private LookupDtl activation;
-
-	@Column(name = "date_of_birth")
+		@Column(name = "date_of_birth")
 	private Date dateOfBirth;
 
-	@Column(name = "created_by", length = 11, nullable = true)
-	private Integer createdBy;
-
-	@Column(name = "updated_by", length = 11, nullable = true)
-	private Integer updatedBy;
+	
 
 	@Column(name = "effective_date", nullable = false)
 	private Date effectiveDate;
@@ -72,12 +69,20 @@ public class User {
 	@Column(name = "phone_number", nullable = true, length = 25)
 	private String phoneNumber;
 
-	@Column(name = "work_phone", nullable = true, length = 25)
-	private String workPhone;
 
 	@Column(name = "mobile_number", length = 25)
 	private String mobileNumber;
+	
+	@ManyToOne
+	@JoinColumn(name = "activation", nullable = true)
+	private LookupDtl activation;
 
+	@Column(name="emp_id",nullable=true,length=11)
+	private String EmpId;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<UserDeviceDetail> userDeviceDetail;
+	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private UserAdditionalInfo userAdditionalInfo;
 
@@ -86,9 +91,9 @@ public class User {
 	}
 
 	public User(Integer userId, String userName, String firstName, String lastName, String email, String password,
-			LookupDtl activation, Date dateOfBirth, Integer createdBy, Integer updatedBy, Date effectiveDate,
-			Date expiryDate, LookupDtl status, Date updatedDate, Date createdDate, String phoneNumber, String workPhone,
-			String mobileNumber, UserAdditionalInfo userAdditionalInfo) {
+			Date dateOfBirth, Date effectiveDate, Date expiryDate, LookupDtl status, Date updatedDate, Date createdDate,
+			String phoneNumber, String mobileNumber, LookupDtl activation, String empId,
+			Set<UserDeviceDetail> userDeviceDetail, UserAdditionalInfo userAdditionalInfo) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -96,18 +101,17 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.activation = activation;
 		this.dateOfBirth = dateOfBirth;
-		this.createdBy = createdBy;
-		this.updatedBy = updatedBy;
 		this.effectiveDate = effectiveDate;
 		this.expiryDate = expiryDate;
 		this.status = status;
 		this.updatedDate = updatedDate;
 		this.createdDate = createdDate;
 		this.phoneNumber = phoneNumber;
-		this.workPhone = workPhone;
 		this.mobileNumber = mobileNumber;
+		this.activation = activation;
+		EmpId = empId;
+		this.userDeviceDetail = userDeviceDetail;
 		this.userAdditionalInfo = userAdditionalInfo;
 	}
 
@@ -159,36 +163,12 @@ public class User {
 		this.password = password;
 	}
 
-	public LookupDtl getActivation() {
-		return activation;
-	}
-
-	public void setActivation(LookupDtl activation) {
-		this.activation = activation;
-	}
-
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Integer getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Integer getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(Integer updatedBy) {
-		this.updatedBy = updatedBy;
 	}
 
 	public Date getEffectiveDate() {
@@ -239,20 +219,36 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getWorkPhone() {
-		return workPhone;
-	}
-
-	public void setWorkPhone(String workPhone) {
-		this.workPhone = workPhone;
-	}
-
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public LookupDtl getActivation() {
+		return activation;
+	}
+
+	public void setActivation(LookupDtl activation) {
+		this.activation = activation;
+	}
+
+	public String getEmpId() {
+		return EmpId;
+	}
+
+	public void setEmpId(String empId) {
+		EmpId = empId;
+	}
+
+	public Set<UserDeviceDetail> getUserDeviceDetail() {
+		return userDeviceDetail;
+	}
+
+	public void setUserDeviceDetail(Set<UserDeviceDetail> userDeviceDetail) {
+		this.userDeviceDetail = userDeviceDetail;
 	}
 
 	public UserAdditionalInfo getUserAdditionalInfo() {
@@ -266,13 +262,13 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", password=" + password + ", activation=" + activation
-				+ ", dateOfBirth=" + dateOfBirth + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy
+				+ lastName + ", email=" + email + ", password=" + password + ", dateOfBirth=" + dateOfBirth
 				+ ", effectiveDate=" + effectiveDate + ", expiryDate=" + expiryDate + ", status=" + status
 				+ ", updatedDate=" + updatedDate + ", createdDate=" + createdDate + ", phoneNumber=" + phoneNumber
-				+ ", workPhone=" + workPhone + ", mobileNumber=" + mobileNumber + ", userAdditionalInfo="
-				+ userAdditionalInfo + "]";
+				+ ", mobileNumber=" + mobileNumber + ", activation=" + activation + ", EmpId=" + EmpId
+				+ ", userDeviceDetail=" + userDeviceDetail + ", userAdditionalInfo=" + userAdditionalInfo + "]";
 	}
 
+	
 	
 }
