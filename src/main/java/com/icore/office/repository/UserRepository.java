@@ -9,10 +9,10 @@ import com.icore.office.domin.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer>,QuerydslPredicateExecutor<User> {
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public User save (User user);
 	
 	public User FindByUserId(Integer integer);
 	
-	public void delete(User user);
+	public void delete(User user);*/
 }

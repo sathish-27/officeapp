@@ -13,10 +13,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lookup_group")
-// @NamedNativeQuery({(name="LookUp.lookupDetails", query="select lookup_cd,
-// lookup_desc, dtl_cd, dtl_desc, lookup.lookup_id, detail.lookup_id,
-// detail.lookup_dtl_id from lookup as lookUp , lookup_dtl as detail where
-// lookUp.lookup_id = detail.lookup_id")})
 public class LookupGroup {
 
 	@Id
@@ -126,12 +122,14 @@ public class LookupGroup {
 		this.updatedDate = updatedDate;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "LookupGroup [lookupGroupId=" + lookupGroupId + ", lookupGroupCode=" + lookupGroupCode
-//				+ ", lookupGroupDescription=" + lookupGroupDescription + ", createdBy=" + createdBy + ", updatedBy="
-//				+ updatedBy + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", lookupDetails="
-//				+ lookupDetails + "]";
-//	}
+	@Override
+	public String toString() {
+		return "LookupGroup [lookupGroupId=" + lookupGroupId + ", lookupGroupCode=" + lookupGroupCode
+				+ ", lookupGroupDescription=" + lookupGroupDescription + ", createdBy=" + createdBy + ", updatedBy="
+				+ updatedBy + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", lookupDetails="
+				+ lookupDetails + "]";
+	}
+
+
 
 }
